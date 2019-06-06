@@ -1,0 +1,31 @@
+{
+  "name": "f1_stats_website",
+  "version": "1.0.0",
+  "description": "",
+  "main": "webpack.config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack -w",
+    "start": "node server/server.js", 
+    "server:dev": "nodemon server/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ThomasHAOD/f1-stats-web-app.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ThomasHAOD/f1-stats-web-app/issues"
+  },
+  "homepage": "https://github.com/ThomasHAOD/f1-stats-web-app#readme",
+  "devDependencies": {
+    "nodemon": "^1.19.1",
+    "webpack": "^4.33.0",
+    "webpack-cli": "^3.3.2"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}

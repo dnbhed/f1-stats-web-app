@@ -12,12 +12,22 @@ DriverDetailsView.prototype.bindEvents = function(){
 }
 
 DriverDetailsView.prototype.populateDetails = function(driver){
+    this.showDesignations(driver);
     this.showDriverName(driver);
     this.showDriverAge(driver);
+    this.showNationality(driver);
+}
+
+DriverDetailsView.prototype.showDesignations = function(driver){
+    const driverCode = driver.code;
+    const driverNumber = driver.permanentNumber;
+    const designationContainer = document.createElement('h1');
+    designationContainer.textContent = driverCode + ' : ' + driverNumber;
+    this.container.appendChild(designationContainer);
 }
 
 DriverDetailsView.prototype.showDriverName = function(driver){
-    const driverName = driver.permanentNumber + ' ' + driver.givenName + " " + driver.familyName;
+    const driverName = driver.givenName + " " + driver.familyName;
     const nameContainer = document.createElement('h2');
     nameContainer.textContent = driverName;
     this.container.appendChild(nameContainer);
@@ -30,6 +40,12 @@ DriverDetailsView.prototype.showDriverAge = function(driver){
     this.container.appendChild(ageContainer);
 }
 
+DriverDetailsView.prototype.showNationality = function(driver){
+    const driverNationality = driver.nationality;
+    const natContainer = document.createElement('h3');
+    natContainer.textContent = driverNationality;
+    this.container.appendChild(natContainer);
+}
 
 
 

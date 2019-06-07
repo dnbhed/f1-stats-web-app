@@ -3,7 +3,7 @@ const PubSub = require('../helpers/pub_sub.js');
 
 const Drivers = function(){
     this.driversData = [];
-    this.driversNames = [];
+    // this.driversNames = [];
 }
 
 Drivers.prototype.getData = function(){
@@ -11,16 +11,7 @@ Drivers.prototype.getData = function(){
     request.get().then((data) => {
         this.driversData = data.MRData.DriverTable.Drivers
         PubSub.publish('Drivers:drivers-ready', this.driversData)
-        this.publishDriversNames(this.driversData);
     })
-}
-
-Drivers.prototype.publishDriversNames = function(drivers){
-    drivers.forEach((driver) => {
-        fullName = driver.givenName + " " + driver.familyName;
-        this.driversNames.push(fullName)
-    })
-    PubSub.publish('Drivers:drivers-names-ready', this.driversNames)
 }
 
 module.exports = Drivers;

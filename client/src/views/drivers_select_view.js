@@ -5,16 +5,19 @@ const DriversSelectView = function(selectElement){
 }
 
 DriversSelectView.prototype.bindEvents = function(){
-    PubSub.subscribe('Drivers:drivers-names-ready', (event) => {
-        driversNames = event.detail;
-        this.populateDriverSelect(driversNames);
+    PubSub.subscribe('Drivers:drivers-ready', (event) => {
+        const drivers = event.detail;
+        this.populateDriverSelect(drivers);
     })
 }
 
 DriversSelectView.prototype.populateDriverSelect = function(driversNames){
-    driversNames.forEach((name) => {
+    driversNames.forEach((driver) => {
+        const fullName = driver.givenName + " " + driver.familyName;
+        const driverID = driver.driverId;
         const nameOption = document.createElement('option');
-        nameOption.textContent = name;
+        nameOption.textContent = fullName;
+        nameOption.id = driverID;
         this.selectElement.appendChild(nameOption)
     })
 }

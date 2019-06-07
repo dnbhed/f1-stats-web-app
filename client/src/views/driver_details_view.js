@@ -47,12 +47,6 @@ DriverDetailsView.prototype.showNationality = function(driver){
     this.container.appendChild(natContainer);
 }
 
-
-
-
-
-
-
 DriverDetailsView.prototype.calculateAge = function(driver){
     const now = new Date();
     const birthdate = new Date(driver.dateOfBirth);

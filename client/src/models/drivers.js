@@ -7,7 +7,8 @@ const Drivers = function(){
 }
 
 Drivers.prototype.getData = function(){
-    const request = new RequestHelper("http://ergast.com/api/f1/2019/drivers.json");
+    const thisYear = new Date().getFullYear();
+    const request = new RequestHelper(`http://ergast.com/api/f1/${thisYear}/drivers.json`);
     request.get().then((data) => {
         this.driversData = data.MRData.DriverTable.Drivers
         PubSub.publish('Drivers:drivers-ready', this.driversData)

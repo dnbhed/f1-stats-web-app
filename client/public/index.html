@@ -7,21 +7,26 @@
     <script type="text/javascript" src="js/bundle.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Share+Tech&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./css/styles.css">
-    <title>F1 Stats</title>
+    <title>F1 Predictor</title>
 </head>
 <body>
     <header>
-        <h1>F1 Driver Stats</h1>
+        <h1>F1 Predictor</h1>
     </header>
 
     <nav>
         <h1>Driver Search</h1>
-    </nav>
-    <select name="drivers" id="drivers-list">
-        <option value="driver-select-1" selected disabled>select driver</option>
-    </select>
+        <select name="drivers" id="drivers-list-1">
+            <option value="select-driver" selected disabled>select driver</option>
+        </select>
 
-    <section id="driver-details"></section>
+        <select name="seasons" id="seasons-list">
+            <option value="season-select" selected disabled>select season</option>
+        </select>
+    </nav>
+    
+
+    <section id="info-container"></section>
 
 
 </body>

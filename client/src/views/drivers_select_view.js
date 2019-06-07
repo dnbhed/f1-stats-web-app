@@ -11,9 +11,7 @@ DriversSelectView.prototype.bindEvents = function(){
     })
     
     this.selectElement.addEventListener('change', (event) => {
-        console.log(event)
         driverID = event.target.value
-        console.log(driverID)
         PubSub.publish('Drivers-select:driver-selected', driverID)
     })
         

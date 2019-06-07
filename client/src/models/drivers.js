@@ -12,6 +12,16 @@ Drivers.prototype.getData = function(){
         this.driversData = data.MRData.DriverTable.Drivers
         PubSub.publish('Drivers:drivers-ready', this.driversData)
     })
+
+    PubSub.subscribe('Drivers-select:driver-selected', (event) => {
+        const selectedDriver = event.detail;
+        const driverDetails = this.driversData.filter((driver) => {
+                if (driver.driverId === selectedDriver){
+                    return driver
+                }
+        })
+        PubSub.publish('Drivers:selected-driver-details', driverDetails)
+    })
 }
 
 module.exports = Drivers;

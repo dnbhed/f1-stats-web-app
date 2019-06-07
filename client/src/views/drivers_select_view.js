@@ -9,6 +9,14 @@ DriversSelectView.prototype.bindEvents = function(){
         const drivers = event.detail;
         this.populateDriverSelect(drivers);
     })
+    
+    this.selectElement.addEventListener('change', (event) => {
+        console.log(event)
+        driverID = event.target.value
+        console.log(driverID)
+        PubSub.publish('Drivers-select:driver-selected', driverID)
+    })
+        
 }
 
 DriversSelectView.prototype.populateDriverSelect = function(driversNames){
@@ -17,10 +25,11 @@ DriversSelectView.prototype.populateDriverSelect = function(driversNames){
         const driverID = driver.driverId;
         const nameOption = document.createElement('option');
         nameOption.textContent = fullName;
-        nameOption.id = driverID;
+        nameOption.value = driverID;
         this.selectElement.appendChild(nameOption)
     })
 }
+
 
 
 module.exports = DriversSelectView;

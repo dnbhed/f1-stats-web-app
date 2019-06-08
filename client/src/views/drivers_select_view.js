@@ -14,7 +14,6 @@ DriversSelectView.prototype.bindEvents = function(){
         driverID = event.target.value
         PubSub.publish('Drivers-select:driver-selected', driverID)
     })
-        
 }
 
 DriversSelectView.prototype.populateDriverSelect = function(driversNames){

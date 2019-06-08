@@ -3,7 +3,6 @@ const PubSub = require('../helpers/pub_sub.js');
 
 const Drivers = function(){
     this.driversData = [];
-    // this.driversNames = [];
 }
 
 Drivers.prototype.getData = function(){

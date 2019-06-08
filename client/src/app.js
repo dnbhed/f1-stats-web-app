@@ -1,16 +1,23 @@
 const Drivers = require('./models/drivers.js');
 const Seasons = require('./models/seasons.js');
+const SeasonRaceSchedules = require('./models/season_race_schedules');
 const DriversSelectView = require('./views/drivers_select_view.js');
 const DriverDetailsView = require('./views/driver_details_view.js');
 const SeasonsSelectView = require('./views/seasons_select_view.js');
+const RaceSelectView = require('./views/race_select_view.js');
 
 document.addEventListener('DOMContentLoaded', () => {
-
-    
 
     const driverDetails = document.querySelector('#info-container');
     const driverDetailsView = new DriverDetailsView(driverDetails);
     driverDetailsView.bindEvents();
+
+    const raceSelector = document.querySelector('#races-list');
+    const raceSelectView = new RaceSelectView(raceSelector);
+    raceSelectView.bindEvents();
+
+    const seasonRaceSchedules = new SeasonRaceSchedules;
+    seasonRaceSchedules.getData();
 
     const seasonsSelector = document.querySelector('#seasons-list');
     const seasonsSelectView = new SeasonsSelectView(seasonsSelector);
@@ -18,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const driversSelector = document.querySelector('#drivers-list-1');
     const driversSelectView = new DriversSelectView(driversSelector);
-    driversSelectView.bindEvents();
+    driversSelectView.bindEvents();    
 
     const seasons = new Seasons;
     seasons.getData();

@@ -16,11 +16,9 @@ SeasonsSelectView.prototype.bindEvents = function () {
 
 SeasonsSelectView.prototype.populateSeasonSelect = function(seasons){
     seasons.forEach((season) => {
-        if (season.season >= 2008){
-            const seasonOption = document.createElement('option');
-            seasonOption.textContent = season.season;
-            this.selectElement.appendChild(seasonOption);
-        }
+        const seasonOption = document.createElement('option');
+        seasonOption.textContent = season.season;
+        this.selectElement.appendChild(seasonOption);
     });
 }
 

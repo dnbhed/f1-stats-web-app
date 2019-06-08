@@ -6,12 +6,22 @@ const Drivers = function(){
 }
 
 Drivers.prototype.getData = function(){
-    const thisYear = new Date().getFullYear();
-    const request = new RequestHelper(`http://ergast.com/api/f1/${thisYear}/drivers.json`);
+
+    const request = new RequestHelper('https://ergast.com/api/f1/drivers.json?limit=1000');
     request.get().then((data) => {
-        this.driversData = data.MRData.DriverTable.Drivers
+        this.driversData = data.MRData.DriverTable.Drivers;
         PubSub.publish('Drivers:drivers-ready', this.driversData)
     })
+    
+    PubSub.subscribe('Seasons:season-selected', (event) => {
+        const year = event.detail
+        const request = new RequestHelper(`http://ergast.com/api/f1/${year}/drivers.json`);
+        request.get().then((data) => {
+            this.driversData = data.MRData.DriverTable.Drivers
+            PubSub.publish('Drivers:drivers-ready', this.driversData)
+        })
+    })
+    
 
     PubSub.subscribe('Drivers-select:driver-selected', (event) => {
         const selectedDriver = event.detail;

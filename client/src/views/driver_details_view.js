@@ -19,10 +19,21 @@ DriverDetailsView.prototype.populateDetails = function(driver){
 }
 
 DriverDetailsView.prototype.showDesignations = function(driver){
-    const driverCode = driver.code;
-    const driverNumber = driver.permanentNumber;
+    let driverCode;
+    if (driver.code){
+        driverCode = driver.code
+    } else {
+        driverCode = ''
+    }
+    let driverNumber;
+    if (driver.permanentNumber){
+        driverNumber = ` : ${driver.permanentNumber}`
+    } else {
+        driverNumber = ''
+    }
+    
     const designationContainer = document.createElement('h1');
-    designationContainer.textContent = driverCode + ' : ' + driverNumber;
+    designationContainer.textContent = driverCode + driverNumber;
     this.container.appendChild(designationContainer);
 }
 

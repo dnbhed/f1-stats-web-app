@@ -13,7 +13,6 @@ RaceResults.prototype.getData = function(){
         const round = roundNumber.detail
         const request = new RequestHelper(`https://ergast.com/api/f1/${this.year}/${round}/results.json`);
         request.get().then((data) => {
-            console.log(data)
             this.raceResults = data.MRData.RaceTable.Races[0].Results
             PubSub.publish('Raceresults:race-results-ready', this.raceResults)
         })

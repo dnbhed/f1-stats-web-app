@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const chartContainer = document.querySelector('#chart-container');
     const chartView = new ChartView(chartContainer);
-    chartView.renderChart();
+    chartView.bindEvents();
 
     const driverDetails1 = document.querySelector('#driver-1-info');
     const driverDetailsView1 = new DriverDetailsView(driverDetails1);

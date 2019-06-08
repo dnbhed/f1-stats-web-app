@@ -7,16 +7,20 @@ const RaceSelectView = function(selectElement){
 RaceSelectView.prototype.bindEvents = function(){
     PubSub.subscribe('RaceSchedules:season-races-ready', (event) => {
         this.publishRaces(event.detail);
-    })
+    });
+
+    this.selectElement.addEventListener('change', (event) => {
+        const selectedRace = event.target.value;
+        PubSub.publish('Races:race-selected', selectedRace);
+    });
 }
 
 RaceSelectView.prototype.publishRaces = function(races){
     races.forEach((race) => {
         const round = race.round;
-        const country = race.Circuit.Location.country;
+        const name = race.raceName;
         const option = document.createElement('option');
-        console.log(option)
-        option.textContent = `Round ${round}: ${country}`
+        option.textContent = `Round ${round}: ${name}`
         option.value = race.Circuit.circuitId
         this.selectElement.appendChild(option);
     })

@@ -15,9 +15,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const chartView = new ChartView(chartContainer);
     chartView.renderChart();
 
-    const driverDetails = document.querySelector('#driver-info');
-    const driverDetailsView = new DriverDetailsView(driverDetails);
-    driverDetailsView.bindEvents();
+    const driverDetails1 = document.querySelector('#driver-1-info');
+    const driverDetailsView1 = new DriverDetailsView(driverDetails1);
+    driverDetailsView1.bindEvents1();
+
+    const driverDetails2 = document.querySelector('#driver-2-info');
+    const driverDetailsView2 = new DriverDetailsView(driverDetails2);
+    driverDetailsView2.bindEvents2();
 
     const qualifyingResults = new QualifyingResults;
     qualifyingResults.getData();
@@ -32,9 +36,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const seasonRaceSchedules = new SeasonRaceSchedules;
     seasonRaceSchedules.getData();
 
-    const driversSelector = document.querySelector('#drivers-list-1');
-    const driversSelectView = new DriversSelectView(driversSelector);
-    driversSelectView.bindEvents();
+    const driversSelector1 = document.querySelector('#drivers-list-1');
+    const driversSelectView1 = new DriversSelectView(driversSelector1);
+    driversSelectView1.bindEvents();
+
+    const driversSelector2 = document.querySelector('#drivers-list-2');
+    const driversSelectView2 = new DriversSelectView(driversSelector2);
+    driversSelectView2.bindEvents();
 
     const drivers = new Drivers;
     drivers.getData();

@@ -23,7 +23,7 @@ Drivers.prototype.getData = function(){
     })
     
 
-    PubSub.subscribe('Drivers-select:driver-1-selected', (event) => {
+    PubSub.subscribe('Drivers-select:driver-drivers-list-1-selected', (event) => {
         const selectedDriver = event.detail;
         const driverDetails = this.driversData.filter((driver) => {
                 if (driver.driverId === selectedDriver){
@@ -31,6 +31,16 @@ Drivers.prototype.getData = function(){
                 }
         })
         PubSub.publish('Drivers:selected-driver-1-details', driverDetails)
+    })
+
+    PubSub.subscribe('Drivers-select:driver-drivers-list-2-selected', (event) => {
+        const selectedDriver = event.detail;
+        const driverDetails = this.driversData.filter((driver) => {
+                if (driver.driverId === selectedDriver){
+                    return driver
+                }
+        })
+        PubSub.publish('Drivers:selected-driver-2-details', driverDetails)
     })
 }
 

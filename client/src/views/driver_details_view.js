@@ -31,7 +31,6 @@ DriverDetailsView.prototype.showDesignations = function(driver){
     } else {
         driverNumber = ''
     }
-    
     const designationContainer = document.createElement('h1');
     designationContainer.textContent = driverCode + driverNumber;
     this.container.appendChild(designationContainer);

@@ -15,6 +15,7 @@ SeasonsSelectView.prototype.bindEvents = function () {
 }
 
 SeasonsSelectView.prototype.populateSeasonSelect = function(seasons){
+    this.selectElement.innerHTML = ''
     seasons.forEach((season) => {
         const seasonOption = document.createElement('option');
         seasonOption.textContent = season.season;

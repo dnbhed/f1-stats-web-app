@@ -14,6 +14,8 @@ SeasonRaceSchedules.prototype.getData = function(){
             PubSub.publish('RaceSchedules:season-races-ready', this.races);
         })
     })
+
+    
 }
 
 module.exports = SeasonRaceSchedules;

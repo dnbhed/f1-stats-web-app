@@ -11,7 +11,8 @@ RaceSelectView.prototype.bindEvents = function(){
 
     this.selectElement.addEventListener('change', (event) => {
         const selectedRace = event.target.value;
-        PubSub.publish('Races:race-selected', selectedRace);
+        console.log("selected race:", selectedRace);
+        PubSub.publish('RacesSchedules:race-selected', selectedRace);
     });
 }
 
@@ -21,7 +22,7 @@ RaceSelectView.prototype.publishRaces = function(races){
         const name = race.raceName;
         const option = document.createElement('option');
         option.textContent = `Round ${round}: ${name}`
-        option.value = race.Circuit.circuitId
+        option.value = race.round
         this.selectElement.appendChild(option);
     })
 }

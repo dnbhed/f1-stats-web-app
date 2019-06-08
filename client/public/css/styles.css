@@ -1,6 +1,14 @@
 body {
     font-family: 'Share Tech', sans-serif;
     color: lightgrey;
-    background: black;
+    background: rgb(31, 31, 31);
 }
 
+select {
+  width: 200px;
+  height: 25px;
+  padding: 16px 20px;
+  border: 5px;
+  border-radius: 0px;
+  background-color: #bdbdbd;
+}

@@ -5,7 +5,7 @@ const DriverDetailsView = function(container){
 }
 
 DriverDetailsView.prototype.bindEvents = function(){
-    PubSub.subscribe('Drivers:selected-driver-details', (event) => {
+    PubSub.subscribe('Drivers:selected-driver-1-details', (event) => {
         this.container.innerHTML = ""
         this.populateDetails(event.detail[0]);
     })

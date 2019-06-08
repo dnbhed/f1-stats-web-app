@@ -23,14 +23,14 @@ Drivers.prototype.getData = function(){
     })
     
 
-    PubSub.subscribe('Drivers-select:driver-selected', (event) => {
+    PubSub.subscribe('Drivers-select:driver-1-selected', (event) => {
         const selectedDriver = event.detail;
         const driverDetails = this.driversData.filter((driver) => {
                 if (driver.driverId === selectedDriver){
                     return driver
                 }
         })
-        PubSub.publish('Drivers:selected-driver-details', driverDetails)
+        PubSub.publish('Drivers:selected-driver-1-details', driverDetails)
     })
 }
 

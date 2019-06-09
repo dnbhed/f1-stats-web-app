@@ -3,30 +3,38 @@ const PubSub = require('../helpers/pub_sub.js');
 const DriverResults = function(){
     this.raceResult = []
     this.qualyResult = []
+    this.driver1ID = ''
+    this.driver2ID = ''
 }
 
 DriverResults.prototype.bindEvents = function(){
     PubSub.subscribe('Drivers:selected-driver-1-details', (event) => {
-        this.parseDriver1Details(event.detail[0])
+        PubSub.subscribe('Qualifyingresults:qualifying-results-ready', (event) => {
+
+        })
+        this.driver1ID = event.detail[0].driverId
+        this.getQualifyingResult1(this.driver1ID);
     })
     PubSub.subscribe('Drivers:selected-driver-2-details', (event) => {
-        this.parseDriver2Details(event.detail[0])
+        this.driver2ID = event.detail[0].driverId
+        this.getQualifyingResult1(this.driver2ID);
+    })
+    
+}
+
+DriverResults.prototype.getQualifyingResult1 = function(driverIDInput){
+    
+
+    const driverID = driverIDInput;
+    const qualyResults = event.detail;
+    qualyResults.forEach((result) => {
+        const driver = result.Driver.driverId;
+        if (driver === driverID) {
+            console.log(result)
+        }
     })
 }
 
-DriverResults.prototype.parseDriver1Details = function (driver) {
-    const driverName = driver.givenName + " " + driver.familyName;
-    const driverID = driver.diverId;
-    this.driver1Details.driverName = driverName;
-    this.driver1Details.driverId = driverID;
-    console.log(this.driver1Details)
-}
 
-DriverResults.prototype.parseDriver2Details = function (driver) {
-    const driverName = driver.givenName + " " + driver.familyName;
-    const driverID = driver.diverId;
-    this.driver2Details.driverName = driverName;
-    this.driver2Details.driverId = driverID;
-}
 
 module.exports = DriverResults;

@@ -21,7 +21,7 @@ Drivers.prototype.getData = function(){
             PubSub.publish('Drivers:drivers-ready', this.driversData)
         })
     })
-    
+
 
     PubSub.subscribe('Drivers-select:driver-drivers-list-1-selected', (event) => {
         const selectedDriver = event.detail;

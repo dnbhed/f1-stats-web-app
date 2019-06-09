@@ -8,16 +8,16 @@ const DriversSelectView = require('./views/drivers_select_view.js');
 const DriverDetailsView = require('./views/driver_details_view.js');
 const SeasonsSelectView = require('./views/seasons_select_view.js');
 const RaceSelectView = require('./views/race_select_view.js');
-const ChartView = require('./views/chart_view.js')
+const RaceChartView = require('./views/race_chart_view.js')
 
 document.addEventListener('DOMContentLoaded', () => {
 
+    const chartContainer = document.querySelector('#chart-container');
+    const chartView = new RaceChartView(chartContainer);
+    chartView.bindEvents();
+
     const driverResults = new DriverResults;
     driverResults.bindEvents();
-
-    const chartContainer = document.querySelector('#chart-container');
-    const chartView = new ChartView(chartContainer);
-    chartView.bindEvents();
 
     const driverDetails1 = document.querySelector('#driver-1-info');
     const driverDetailsView1 = new DriverDetailsView(driverDetails1);

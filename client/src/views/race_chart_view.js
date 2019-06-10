@@ -125,7 +125,8 @@ RaceChartView.prototype.renderChart = function(results){
             align: 'center'
         },
         xAxis: [{
-            categories: ['Q1', 'Q2', 'Q3', 'Grid', 'Finished', 'Points'],
+            // categories: ['Q1', 'Q2', 'Q3', 'Grid', 'Finished', 'Points'],
+            categories: [`${driver1Code}`, `${driver2Code}`],
             crosshair: true
         }],
         yAxis: [{ // Primary yAxis
@@ -187,31 +188,66 @@ RaceChartView.prototype.renderChart = function(results){
             backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || 'rgba(255,255,255,0.25)'
         },
         series: [{
-            name: 'time',
+            name: 'q1 time',
             type: 'column',
             yAxis: 1,
-            data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4],
+            data: [driver1Q1, driver2Q1],
             tooltip: {
                 valueSuffix: ' '
             }
 
-        }, {
-            name: 'Position',
+        },
+        {
+            name: 'q2 time',
+            type: 'column',
+            yAxis: 1,
+            data: [driver1Q2, driver2Q2],
+            tooltip: {
+                valueSuffix: ' '
+            }
+
+        },
+        {
+            name: 'q3 time',
+            type: 'column',
+            yAxis: 1,
+            data: [driver1Q3, driver2Q3],
+            tooltip: {
+                valueSuffix: ' '
+            }
+
+        },
+         {
+            name: 'Grid Position',
             type: 'column',
             yAxis: 2,
-            data: [1016, 1016, 1015.9, 1015.5, 1012.3, 1009.5, 1009.6, 1010.2, 1013.1, 1016.9, 1018.2, 1016.7],
+            data: [driver1Grid, driver2Grid],
             marker: {
                 enabled: false
             },
-            dashStyle: 'shortdot',
             tooltip: {
                 valuePrefix: 'P '
             }
 
-        }, {
+        }, 
+         {
+            name: 'Finishing Position',
+            type: 'column',
+            yAxis: 2,
+            data: [driver1Finish, driver2Finish],
+            marker: {
+                enabled: false
+            },
+            tooltip: {
+                valuePrefix: 'P '
+            }
+
+        }, 
+        
+        {
             name: 'Points',
             type: 'column',
-            data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6],
+            data: [driver1Points, driver2Points],
             tooltip: {
                 valueSuffix: ' points'
             }

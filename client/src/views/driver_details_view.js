@@ -22,7 +22,6 @@ DriverDetailsView.prototype.bindEvents2 = function(){
 DriverDetailsView.prototype.populateDetails = function(driver){
     this.showDesignations(driver);
     this.showDriverName(driver);
-    this.showDriverAge(driver);
     this.showNationality(driver);
 }
 
@@ -51,26 +50,11 @@ DriverDetailsView.prototype.showDriverName = function(driver){
     this.container.appendChild(nameContainer);
 }
 
-DriverDetailsView.prototype.showDriverAge = function(driver){
-    const driverAge = this.calculateAge(driver);
-    const ageContainer = document.createElement('h3');
-    ageContainer.textContent = `Age: ${driverAge}`;
-    this.container.appendChild(ageContainer);
-}
-
 DriverDetailsView.prototype.showNationality = function(driver){
     const driverNationality = driver.nationality;
     const natContainer = document.createElement('h3');
     natContainer.textContent = driverNationality;
     this.container.appendChild(natContainer);
-}
-
-DriverDetailsView.prototype.calculateAge = function(driver){
-    const now = new Date();
-    const birthdate = new Date(driver.dateOfBirth);
-    const diff = now - birthdate;
-    const age = Math.floor(diff / 31557600000);
-    return age
 }
 
 module.exports = DriverDetailsView;

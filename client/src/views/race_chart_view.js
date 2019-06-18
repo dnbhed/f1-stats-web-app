@@ -4,65 +4,84 @@ const Highcharts = require('highcharts');
 const RaceChartView = function(container){
     this.container = container;
     this.series = [];
+    this.results = {};
 }
 
 RaceChartView.prototype.bindEvents = function(){
-    const driversResults = [];
     PubSub.subscribe('Results:quali-result-driver-1', (event) => {
-        const qualiResult = this.parseDriverQualiResults(event.detail)
-        driversResults.push(qualiResult)
+        this.parseDriverQualiResults1(event.detail)
+        this.renderChart();
     });
 
     PubSub.subscribe('Results:race-result-driver-1', (event) => {
-        const raceResult = this.parseDriverRaceResults(event.detail)
-        driversResults.push(raceResult)
-        this.renderChart(driversResults)
+        this.parseDriverRaceResults1(event.detail)
+        this.renderChart();
     });
 
     PubSub.subscribe('Results:quali-result-driver-2', (event) => {
-        const qualiResult = this.parseDriverQualiResults(event.detail)
-        driversResults.push(qualiResult)
+        this.parseDriverQualiResults2(event.detail)
+        this.renderChart();
+        // if (qualiResult) {driversResults.push(qualiResult)}
     });
 
     PubSub.subscribe('Results:race-result-driver-2', (event) => {
-        const raceResult = this.parseDriverRaceResults(event.detail)
-        driversResults.push(raceResult)
-        this.renderChart(driversResults)
+        this.parseDriverRaceResults2(event.detail)
+        this.renderChart();
+        // driversResults.push(raceResult)
+        // this.renderChart(driversResults)
     });
 }
 
-RaceChartView.prototype.parseDriverQualiResults = function(result){
-    const qResult = {};
+RaceChartView.prototype.parseDriverQualiResults1 = function(result){
+    this.results.qResult1 = {};
     const driverCode = result.Driver.code;
     const q1 = result.Q1;
     const q2 = result.Q2;
     const q3 = result.Q3;
     const grid = result.position;
-    qResult.driverCode = driverCode;
-    qResult.q1 = q1;
-    qResult.q2 = q2;
-    qResult.q3 = q3;
-    qResult.grid = grid;
-    return qResult;
+    this.results.qResult1.driverCode = driverCode;
+    this.results.qResult1.q1 = q1;
+    this.results.qResult1.q2 = q2;
+    this.results.qResult1.q3 = q3;
+    this.results.qResult1.grid = grid;
+}
+RaceChartView.prototype.parseDriverQualiResults2 = function(result){
+    this.results.qResult2 = {};
+    const driverCode = result.Driver.code;
+    const q1 = result.Q1;
+    const q2 = result.Q2;
+    const q3 = result.Q3;
+    const grid = result.position;
+    this.results.qResult2.driverCode = driverCode;
+    this.results.qResult2.q1 = q1;
+    this.results.qResult2.q2 = q2;
+    this.results.qResult2.q3 = q3;
+    this.results.qResult2.grid = grid;
 }
 
-RaceChartView.prototype.parseDriverRaceResults = function(result){
-    const raceResult = {};
+RaceChartView.prototype.parseDriverRaceResults1 = function(result){
+    this.results.raceResult1 = {};
     const finishingPosition = result.position;
     const points = result.points;
-    raceResult.finishingPosition = finishingPosition;
-    raceResult.points = points;
-    return raceResult;
+    this.results.raceResult1.finishingPosition = finishingPosition;
+    this.results.raceResult1.points = points;
 }
 
-RaceChartView.prototype.renderChart = function(results){
+RaceChartView.prototype.parseDriverRaceResults2 = function(result){
+    this.results.raceResult2 = {};
+    const finishingPosition = result.position;
+    const points = result.points;
+    this.results.raceResult2.finishingPosition = finishingPosition;
+    this.results.raceResult2.points = points;
+}
+
+RaceChartView.prototype.renderChart = function(){
     const container = this.container
-    console.log(results)
-    const driver1Qualy = results[0];
-    const driver1Race = results[1];
-    const driver2Qualy = results[2];
-    const driver2Race = results[3];
-    console.log(driver1Qualy)
+    console.log(this.results);
+    const driver1Qualy = this.results.qResult1;
+    const driver1Race = this.results.raceResult1;
+    const driver2Qualy = this.results.qResult2;
+    const driver2Race = this.results.raceResult2;
 
     const driver1Code = driver1Qualy.driverCode;
     const driver1Q1 = parseFloat(driver1Qualy.q1);

@@ -31,8 +31,8 @@ DriversSelectView.prototype.populateDriverSelect = function(driversNames){
         const nameOption = document.createElement('option');
         nameOption.textContent = fullName;
         nameOption.value = driverID;
-        this.selectElement.appendChild(nameOption);
-    })
+        this.selectElement.appendChild(nameOption);       
+    })  
 }
 
 

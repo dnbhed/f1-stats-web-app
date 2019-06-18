@@ -17,9 +17,11 @@ SeasonsSelectView.prototype.bindEvents = function () {
 SeasonsSelectView.prototype.populateSeasonSelect = function(seasons){
     this.selectElement.innerHTML = ''
     seasons.forEach((season) => {
+        if(season.season > 2002){
         const seasonOption = document.createElement('option');
         seasonOption.textContent = season.season;
         this.selectElement.appendChild(seasonOption);
+        }
     });
 }
 

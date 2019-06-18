@@ -17,6 +17,7 @@ RaceSelectView.prototype.bindEvents = function(){
 }
 
 RaceSelectView.prototype.publishRaces = function(races){
+    this.selectElement.innerHTML = ''
     races.forEach((race) => {
         const round = race.round;
         const name = race.raceName;

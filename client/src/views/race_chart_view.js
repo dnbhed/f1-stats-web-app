@@ -4,7 +4,33 @@ const Highcharts = require('highcharts');
 const RaceChartView = function(container){
     this.container = container;
     this.series = [];
-    this.results = {};
+    this.results = {
+        qResult1:
+        {
+        driverCode: "Not Selected",
+        q1: 0,
+        q2: 0,
+        q3: 0
+        },
+        raceResult1: 
+        {
+        grid: 0,
+        finishingPosition: 0,
+        points: 0
+        },
+        qResult2:
+        {
+        driverCode: "Not Selected",
+        q1: 0,
+        q2: 0,
+        q3: 0
+        },
+        raceResult2:{
+        grid: 0,
+        finishingPosition: 0,
+        points: 0
+        } 
+    }
 }
 
 RaceChartView.prototype.bindEvents = function(){
@@ -71,33 +97,35 @@ RaceChartView.prototype.parseDriverRaceResults2 = function(result){
     this.results.raceResult2 = {};
     const finishingPosition = result.position;
     const points = result.points;
-    this.results.raceResult2.finishingPosition = finishingPosition;
+    this.results.raceResult2.finish = finishingPosition;
     this.results.raceResult2.points = points;
 }
 
 RaceChartView.prototype.renderChart = function(){
-    const container = this.container
-    console.log(this.results);
+    
+
+    const container = this.container;
+
     const driver1Qualy = this.results.qResult1;
     const driver1Race = this.results.raceResult1;
     const driver2Qualy = this.results.qResult2;
     const driver2Race = this.results.raceResult2;
 
-    const driver1Code = driver1Qualy.driverCode;
-    const driver1Q1 = parseFloat(driver1Qualy.q1);
-    const driver1Q2 = parseFloat(driver1Qualy.q2);
-    const driver1Q3 = parseFloat(driver1Qualy.q3);
-    const driver1Grid = parseInt(driver1Qualy.grid);
-    const driver1Finish = parseInt(driver1Race.finishingPosition);
-    const driver1Points = parseInt(driver1Race.points);
+    driver1Code = driver1Qualy.driverCode;
+    driver1Q1 = parseFloat(driver1Qualy.q1);
+    driver1Q2 = parseFloat(driver1Qualy.q2);
+    driver1Q3 = parseFloat(driver1Qualy.q3);
+    driver1Grid = parseInt(driver1Qualy.grid);
+    driver1Finish = parseInt(driver1Race.finishingPosition);
+    driver1Points = parseInt(driver1Race.points);
 
-    const driver2Code = driver2Qualy.driverCode;
-    const driver2Q1 = parseFloat(driver2Qualy.q1);
-    const driver2Q2 = parseFloat(driver2Qualy.q2);
-    const driver2Q3 = parseFloat(driver2Qualy.q3);
-    const driver2Grid = parseInt(driver2Qualy.grid);
-    const driver2Finish = parseInt(driver2Race.finishingPosition);
-    const driver2Points = parseInt(driver2Race.points);
+    driver2Code = driver2Qualy.driverCode;
+    driver2Q1 = parseFloat(driver2Qualy.q1);
+    driver2Q2 = parseFloat(driver2Qualy.q2);
+    driver2Q3 = parseFloat(driver2Qualy.q3);
+    driver2Grid = parseInt(driver2Qualy.grid);
+    driver2Finish = parseInt(driver2Race.finishingPosition);
+    driver2Points = parseInt(driver2Race.points);
 
     // var myChart = Highcharts.chart(container, {    
 

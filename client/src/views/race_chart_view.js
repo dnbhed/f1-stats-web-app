@@ -3,37 +3,20 @@ const Highcharts = require('highcharts');
 
 const RaceChartView = function(container){
     this.container = container;
-    this.series = [];
     this.results = {
         qResult1:
-        {
-        driverCode: "Not Selected",
-        q1: 0,
-        q2: 0,
-        q3: 0
-        },
+            { driverCode: "Not Selected", grid: 1},
         raceResult1: 
-        {
-        grid: 0,
-        finishingPosition: 0,
-        points: 0
-        },
+            { finishingPosition: 1, points: 25},
         qResult2:
-        {
-        driverCode: "Not Selected",
-        q1: 0,
-        q2: 0,
-        q3: 0
-        },
-        raceResult2:{
-        grid: 0,
-        finishingPosition: 0,
-        points: 0
-        } 
+            { driverCode: "Not Selected", grid: 20},
+        raceResult2:
+            { finishingPosition: 20, points: 0} 
     }
 }
 
 RaceChartView.prototype.bindEvents = function(){
+    this.renderChart();
     PubSub.subscribe('Results:quali-result-driver-1', (event) => {
         this.parseDriverQualiResults1(event.detail)
         this.renderChart();
@@ -47,41 +30,27 @@ RaceChartView.prototype.bindEvents = function(){
     PubSub.subscribe('Results:quali-result-driver-2', (event) => {
         this.parseDriverQualiResults2(event.detail)
         this.renderChart();
-        // if (qualiResult) {driversResults.push(qualiResult)}
     });
 
     PubSub.subscribe('Results:race-result-driver-2', (event) => {
         this.parseDriverRaceResults2(event.detail)
         this.renderChart();
-        // driversResults.push(raceResult)
-        // this.renderChart(driversResults)
+
     });
 }
 
 RaceChartView.prototype.parseDriverQualiResults1 = function(result){
     this.results.qResult1 = {};
     const driverCode = result.Driver.code;
-    const q1 = result.Q1;
-    const q2 = result.Q2;
-    const q3 = result.Q3;
     const grid = result.position;
     this.results.qResult1.driverCode = driverCode;
-    this.results.qResult1.q1 = q1;
-    this.results.qResult1.q2 = q2;
-    this.results.qResult1.q3 = q3;
     this.results.qResult1.grid = grid;
 }
 RaceChartView.prototype.parseDriverQualiResults2 = function(result){
     this.results.qResult2 = {};
     const driverCode = result.Driver.code;
-    const q1 = result.Q1;
-    const q2 = result.Q2;
-    const q3 = result.Q3;
     const grid = result.position;
     this.results.qResult2.driverCode = driverCode;
-    this.results.qResult2.q1 = q1;
-    this.results.qResult2.q2 = q2;
-    this.results.qResult2.q3 = q3;
     this.results.qResult2.grid = grid;
 }
 
@@ -112,52 +81,15 @@ RaceChartView.prototype.renderChart = function(){
     const driver2Race = this.results.raceResult2;
 
     driver1Code = driver1Qualy.driverCode;
-    driver1Q1 = parseFloat(driver1Qualy.q1);
-    driver1Q2 = parseFloat(driver1Qualy.q2);
-    driver1Q3 = parseFloat(driver1Qualy.q3);
     driver1Grid = parseInt(driver1Qualy.grid);
+    console.log(driver1Grid)
     driver1Finish = parseInt(driver1Race.finishingPosition);
     driver1Points = parseInt(driver1Race.points);
 
     driver2Code = driver2Qualy.driverCode;
-    driver2Q1 = parseFloat(driver2Qualy.q1);
-    driver2Q2 = parseFloat(driver2Qualy.q2);
-    driver2Q3 = parseFloat(driver2Qualy.q3);
     driver2Grid = parseInt(driver2Qualy.grid);
     driver2Finish = parseInt(driver2Race.finishingPosition);
     driver2Points = parseInt(driver2Race.points);
-
-    // var myChart = Highcharts.chart(container, {    
-
-    //     chart: {
-    //         yAxis: {
-    //             min: 0,
-    //             max: 20,
-    //             minRange:20
-    //         }
-    //     },
-    //     title: {
-    //         text: 'Qualy and Race Results'
-    //     },
-    //     xAxis: {
-    //         categories: ['Q1', 'Q2', 'Q3','Grid', 'Finished', 'Points']
-    //     },
-    //     yAxis: {
-    //         title: {
-    //             text: 'Position'
-    //         }
-    //     },
-    //     series: [{
-    //         type: "column",
-    //         name: driver1Code,
-    //         data: [driver1Q1, driver1Q2, driver1Q3, driver1Grid, driver1Finish, driver1Points]
-    //     }, {
-    //         type: "column",
-    //         name: driver2Code,
-    //         data: [driver2Q1, driver2Q2, driver2Q3, driver2Grid, driver2Finish, driver2Points]
-    //     }]
-    // });
-
 
     Highcharts.chart(container, {
         chart: {
@@ -176,22 +108,8 @@ RaceChartView.prototype.renderChart = function(){
             categories: [`${driver1Code}`, `${driver2Code}`],
             crosshair: true
         }],
-        yAxis: [{ // Primary yAxis
-            labels: {
-                format: 'time',
-                style: {
-                    color: Highcharts.getOptions().colors[2]
-                }
-            },
-            title: {
-                text: 'Time(s)',
-                style: {
-                    color: Highcharts.getOptions().colors[2]
-                }
-            },
-            opposite: true
-
-        }, { // Secondary yAxis
+        yAxis: [{ 
+            reversed: true,
             gridLineWidth: 0,
             title: {
                 text: 'Position',
@@ -200,13 +118,16 @@ RaceChartView.prototype.renderChart = function(){
                 }
             },
             labels: {
-                format: 'P',
+                format: 'P{value} ',
                 style: {
                     color: Highcharts.getOptions().colors[0]
                 }
-            }
+            },
+            min: 1, 
+            max: 20 
 
-        }, { // Tertiary yAxis
+
+        }, { 
             gridLineWidth: 0,
             title: {
                 text: 'Points',
@@ -220,54 +141,28 @@ RaceChartView.prototype.renderChart = function(){
                     color: Highcharts.getOptions().colors[1]
                 }
             },
-            opposite: true
-        }],
+            opposite: true,
+                min: 0,
+                max: 25
+        }, 
+         ],
         tooltip: {
             shared: true
         },
         legend: {
             layout: 'vertical',
-            align: 'left',
+            align: 'center',
             x: 80,
             verticalAlign: 'top',
             y: 55,
             floating: true,
             backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || 'rgba(255,255,255,0.25)'
         },
-        series: [{
-            name: 'q1 time',
-            type: 'column',
-            yAxis: 1,
-            data: [driver1Q1, driver2Q1],
-            tooltip: {
-                valueSuffix: ' '
-            }
-
-        },
-        {
-            name: 'q2 time',
-            type: 'column',
-            yAxis: 1,
-            data: [driver1Q2, driver2Q2],
-            tooltip: {
-                valueSuffix: ' '
-            }
-
-        },
-        {
-            name: 'q3 time',
-            type: 'column',
-            yAxis: 1,
-            data: [driver1Q3, driver2Q3],
-            tooltip: {
-                valueSuffix: ' '
-            }
-
-        },
+        series: [
          {
             name: 'Grid Position',
-            type: 'column',
-            yAxis: 2,
+            type: 'scatter',
+            yAxis: 0,
             data: [driver1Grid, driver2Grid],
             marker: {
                 enabled: false
@@ -279,8 +174,8 @@ RaceChartView.prototype.renderChart = function(){
         }, 
          {
             name: 'Finishing Position',
-            type: 'column',
-            yAxis: 2,
+            type: 'scatter',
+            yAxis: 0,
             data: [driver1Finish, driver2Finish],
             marker: {
                 enabled: false
@@ -294,6 +189,7 @@ RaceChartView.prototype.renderChart = function(){
         {
             name: 'Points',
             type: 'column',
+            yAxis: 1,
             data: [driver1Points, driver2Points],
             tooltip: {
                 valueSuffix: ' points'

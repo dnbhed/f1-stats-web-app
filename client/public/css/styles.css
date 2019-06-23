@@ -12,3 +12,7 @@ select {
   border-radius: 0px;
   background-color: #bdbdbd;
 }
+
+a-scene {
+  z-index: -1;
+}

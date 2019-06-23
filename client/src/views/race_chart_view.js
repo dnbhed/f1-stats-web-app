@@ -82,7 +82,6 @@ RaceChartView.prototype.renderChart = function(){
 
     driver1Code = driver1Qualy.driverCode;
     driver1Grid = parseInt(driver1Qualy.grid);
-    console.log(driver1Grid)
     driver1Finish = parseInt(driver1Race.finishingPosition);
     driver1Points = parseInt(driver1Race.points);
 
@@ -125,8 +124,6 @@ RaceChartView.prototype.renderChart = function(){
             },
             min: 1, 
             max: 20 
-
-
         }, { 
             gridLineWidth: 0,
             title: {
@@ -170,7 +167,6 @@ RaceChartView.prototype.renderChart = function(){
             tooltip: {
                 valuePrefix: 'P '
             }
-
         }, 
          {
             name: 'Finishing Position',
@@ -185,7 +181,6 @@ RaceChartView.prototype.renderChart = function(){
             }
 
         }, 
-        
         {
             name: 'Points',
             type: 'column',

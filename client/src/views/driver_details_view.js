@@ -9,14 +9,13 @@ DriverDetailsView.prototype.bindEvents1 = function(){
         this.container.innerHTML = ""
         this.populateDetails(event.detail[0]);
     })
-    
 }
+
 DriverDetailsView.prototype.bindEvents2 = function(){
     PubSub.subscribe('Drivers:selected-driver-2-details', (event) => {
         this.container.innerHTML = ""
         this.populateDetails(event.detail[0]);
     })
-    
 }
 
 DriverDetailsView.prototype.populateDetails = function(driver){

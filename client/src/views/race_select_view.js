@@ -23,7 +23,7 @@ RaceSelectView.prototype.publishRaces = function(races){
         const name = race.raceName;
         const option = document.createElement('option');
         option.textContent = `Round ${round}: ${name}`
-        option.value = race.round
+        option.value = race.Circuit.circuitId
         this.selectElement.appendChild(option);
     })
 }

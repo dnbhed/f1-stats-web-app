@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // chartView.bindEvents();
 
     const driverResults = new DriverResults;
-    // driverResults.bindEvents();
+    driverResults.getData();
 
     const driverDetails1 = document.querySelector('#driver-1-info');
     const driverDetailsView1 = new DriverDetailsView(driverDetails1);

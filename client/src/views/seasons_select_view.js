@@ -16,6 +16,11 @@ SeasonsSelectView.prototype.bindEvents = function () {
 
 SeasonsSelectView.prototype.populateSeasonSelect = function(seasons){
     this.selectElement.innerHTML = ''
+    const defaultOption = document.createElement('option');
+    defaultOption.textContent = "Select Season";
+    defaultOption.setAttribute('selected', '');
+    defaultOption.setAttribute('disabled', '');
+    this.selectElement.appendChild(defaultOption);
     seasons.forEach((season) => {
         if(season.season > 2002){
         const seasonOption = document.createElement('option');

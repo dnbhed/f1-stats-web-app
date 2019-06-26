@@ -15,65 +15,44 @@ const RaceChartView = function(container){
     }
 }
 
-// RaceChartView.prototype.bindEvents = function(){
-//     this.renderChart();
-//     PubSub.subscribe('Results:quali-result-driver-1', (event) => {
-//         this.parseDriverQualiResults1(event.detail)
-//         this.renderChart();
-//     });
+RaceChartView.prototype.bindEvents = function(){
+    // this.renderChart();
+    PubSub.subscribe('DriverResults:results-1-ready', (event) => {
+        console.log(event.detail)
+        // this.parseDriverRaceResults1(event.detail)
+        // this.renderChart();
+    });
 
-//     PubSub.subscribe('Results:race-result-driver-1', (event) => {
-//         this.parseDriverRaceResults1(event.detail)
-//         this.renderChart();
-//     });
+    PubSub.subscribe('DriverResults:results-2-ready', (event) => {
+        console.log(event.detail)
 
-//     PubSub.subscribe('Results:quali-result-driver-2', (event) => {
-//         this.parseDriverQualiResults2(event.detail)
-//         this.renderChart();
-//     });
+        // this.parseDriverRaceResults2(event.detail)        
+        // this.renderChart();
+    });
 
-//     PubSub.subscribe('Results:race-result-driver-2', (event) => {
-//         this.parseDriverRaceResults2(event.detail)
-//         this.renderChart();
+}
 
-//     });
-// }
 
-// RaceChartView.prototype.parseDriverQualiResults1 = function(result){
-//     this.results.qResult1 = {};
-//     const driverCode = result.Driver.code;
-//     const grid = result.position;
-//     this.results.qResult1.driverCode = driverCode;
-//     this.results.qResult1.grid = grid;
-// }
-// RaceChartView.prototype.parseDriverQualiResults2 = function(result){
-//     this.results.qResult2 = {};
-//     const driverCode = result.Driver.code;
-//     const grid = result.position;
-//     this.results.qResult2.driverCode = driverCode;
-//     this.results.qResult2.grid = grid;
-// }
+RaceChartView.prototype.parseDriverRaceResults1 = function(result){
+    this.results.raceResult1 = {};
+    const finishingPosition = result.position;
+    const points = result.points;
+    this.results.raceResult1.finishingPosition = finishingPosition;
+    this.results.raceResult1.points = points;
+}
 
-// RaceChartView.prototype.parseDriverRaceResults1 = function(result){
-//     this.results.raceResult1 = {};
-//     const finishingPosition = result.position;
-//     const points = result.points;
-//     this.results.raceResult1.finishingPosition = finishingPosition;
-//     this.results.raceResult1.points = points;
-// }
-
-// RaceChartView.prototype.parseDriverRaceResults2 = function(result){
-//     this.results.raceResult2 = {};
-//     const finishingPosition = result.position;
-//     const points = result.points;
-//     this.results.raceResult2.finish = finishingPosition;
-//     this.results.raceResult2.points = points;
-// }
+RaceChartView.prototype.parseDriverRaceResults2 = function(result){
+    this.results.raceResult2 = {};
+    const finishingPosition = result.position;
+    const points = result.points;
+    this.results.raceResult2.finish = finishingPosition;
+    this.results.raceResult2.points = points;
+}
 
 RaceChartView.prototype.renderChart = function(){
    
 
-    Highcharts.chart(container, {
+    Highcharts.chart(this.container, {
         chart: {
             zoomType: 'xy'
         },

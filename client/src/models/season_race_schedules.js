@@ -6,14 +6,13 @@ const SeasonRaceSchedules = function(){
 }
 
 SeasonRaceSchedules.prototype.getData = function(){
-    PubSub.subscribe('Seasons:season-selected', (event) => {
-        const selectedYear = event.detail
-        const request = new RequestHelper(`https://ergast.com/api/f1/${selectedYear}.json`);
+
+        const request = new RequestHelper(`https://ergast.com/api/f1/current.json`);
         request.get().then((data) => {
             this.races = data.MRData.RaceTable.Races;
             PubSub.publish('RaceSchedules:season-races-ready', this.races);
         })
-    })
+
 
     
 }

@@ -21,7 +21,7 @@ DriversSelectView.prototype.bindEvents = function(){
 DriversSelectView.prototype.populateDriverSelect = function(driversNames){
     this.selectElement.innerHTML = " "
     const defaultOption = document.createElement('option');
-    defaultOption.textContent = "select driver";
+    defaultOption.textContent = "Select Driver";
     defaultOption.setAttribute('selected', '');
     defaultOption.setAttribute('disabled', '');
     this.selectElement.appendChild(defaultOption);

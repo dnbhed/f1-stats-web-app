@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const chartContainer = document.querySelector('#chart-container');
     const chartView = new RaceChartView(chartContainer);
-    // chartView.bindEvents();
+    chartView.bindEvents();
 
     const driverResults = new DriverResults;
     driverResults.getData();

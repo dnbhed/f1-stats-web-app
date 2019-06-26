@@ -7,4 +7,5 @@ RequestHelper.prototype.get = function () {
         .then(response => response.json());
 };
 
+
 module.exports = RequestHelper;

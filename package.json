@@ -7,7 +7,6 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server/server.js",
     "build": "webpack -w",
-
     "server:dev": "nodemon server/server.js"
   },
   "repository": {
@@ -19,8 +18,10 @@
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/ThomasHAOD/f1-stats-web-app/issues"
-  },"engines": {
-      "node": "12.x"
+  },
+  "engines": {
+      "node": "v12.1.0",
+      "npm": "6.9.0"
   },
   "homepage": "https://github.com/ThomasHAOD/f1-stats-web-app#readme",
   "devDependencies": {

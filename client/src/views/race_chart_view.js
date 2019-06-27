@@ -4,68 +4,86 @@ const Highcharts = require('highcharts');
 const RaceChartView = function(container){
     this.container = container;
     this.driver1Results = { driverCode: "Not Selected", years: [], grids: [], positions: [] };
-    this.driver2Results = { driverCode: "Not Selected", years: [], grids: [], positions: [] }; 
-    
+    this.driver2Results = { driverCode: "Not Selected", years: [], grids: [], positions: [] };    
 }
 
 RaceChartView.prototype.bindEvents = function(){
     PubSub.subscribe('DriverResults:results-1-ready', (event) => {
+        this.driver1Results = { driverCode: "Not Selected", years: [], grids: [], positions: [] }
+
         this.parseDriver1RacesResults(event.detail)
         
         this.renderChart();
     });
 
     PubSub.subscribe('DriverResults:results-2-ready', (event) => {
+        this.driver2Results = { driverCode: "Not Selected", years: [], grids: [], positions: [] }
+
         this.parseDriver2RacesResults(event.detail)  
 
         this.renderChart();
     });
 }
 
+RaceChartView.prototype.parseDriver1RacesResults = function (results) {
+    const firstRace = results[0]
+    const driverCode = firstRace.Results[0].Driver.code;
+    this.driver1Results.driverCode = driverCode;
+    this.driver1Results[driverCode] = []
+    results.forEach((race) => {
+        const season = parseInt(race.season);
+        this.driver1Results.years.push(season);
 
-RaceChartView.prototype.parseDriver1RacesResults = function(result){
-    this.driver1Results = result;
-    console.log(this.driver1Results)
-    console.log(this.driver2Results)
-    console.log(this.driver2Results === this.driver1Results)
+        const grid = parseInt(race.Results[0].grid);
+        this.driver1Results.grids.push(grid);
 
+        const position = parseInt(race.Results[0].position);
+        this.driver1Results.positions.push(position);
+    })
 }
 
-RaceChartView.prototype.parseDriver2RacesResults = function(result){
-    this.driver2Results = result;
-    console.log(this.driver1Results)
-    console.log(this.driver2Results)
-    console.log(this.driver2Results === this.driver1Results)
+RaceChartView.prototype.parseDriver2RacesResults = function (results) {
+    const firstRace = results[0]
+    const driverCode = firstRace.Results[0].Driver.code;
+    this.driver2Results.driverCode = driverCode;
+    this.driver2Results[driverCode] = []
+    results.forEach((race) => {
+        const season = parseInt(race.season);
+        this.driver2Results.years.push(season);
 
+        const grid = parseInt(race.Results[0].grid);
+        this.driver2Results.grids.push(grid);
+
+        const position = parseInt(race.Results[0].position);
+        this.driver2Results.positions.push(position);
+    })
 }
+
+// RaceChartView.prototype.parseDriver1RacesResults = function(result){
+//     this.driver1Results = result;
+// }
+
+// RaceChartView.prototype.parseDriver2RacesResults = function(result){
+//     this.driver2Results = result;
+// }
 
 RaceChartView.prototype.renderChart = function(){
     const driver1Code = this.driver1Results.driverCode
     const driver2Code = this.driver2Results.driverCode
-
-    // console.log(driver1Code)
-    // console.log(driver2Code)
     
     const driver1Years = this.driver1Results.years
     const driver2Years = this.driver2Results.years
 
-    // console.log(driver1Years)
-    // console.log(driver2Years)
-
-    const driver1Grids = this.driver1Results.grids
-    const driver2Grids = this.driver2Results.grids
-
-    // console.log(driver1Grids)
-    // console.log(driver2Grids)
-
-
-    const driver1Positions = this.driver1Results.positions
-    const driver2Positions = this.driver2Results.positions
-
-    // console.log(driver1Positions)
-    // console.log(driver2Positions)
-
     const chosenYears = this.defineYears(driver1Years, driver2Years)
+
+    const driver1Grids = this.populateResultsArraysCorrectly(this.driver1Results.grids, chosenYears)
+    const driver2Grids = this.populateResultsArraysCorrectly(this.driver2Results.grids, chosenYears)
+
+    const driver1Positions = this.populateResultsArraysCorrectly(this.driver1Results.positions, chosenYears)
+    const driver2Positions = this.populateResultsArraysCorrectly(this.driver2Results.positions, chosenYears)
+
+
+    console.log(chosenYears)
 
     Highcharts.chart(this.container, {
         chart: {
@@ -80,7 +98,7 @@ RaceChartView.prototype.renderChart = function(){
             align: 'center'
         },
         xAxis: [{
-            reversed: true,
+            reversed: false,
             categories: chosenYears,
             crosshair: true
         }],
@@ -125,9 +143,21 @@ RaceChartView.prototype.renderChart = function(){
                 enabled: true
             },
             tooltip: {
-                valuePrefix: 'P '
+                valuePrefix: 'P'
             }
         }, 
+            {
+                name: `${driver1Code} Finishing Position`,
+                type: 'line',
+                yAxis: 0,
+                data: driver1Positions,
+                marker: {
+                    enabled: true
+                },
+                tooltip: {
+                    valuePrefix: 'P'
+                }
+            },
          {
             name: `${driver2Code} Grid Position`,
             type: 'line',
@@ -137,21 +167,10 @@ RaceChartView.prototype.renderChart = function(){
                 enabled: true
             },
             tooltip: {
-                valuePrefix: 'P '
+                valuePrefix: 'P'
             }
         }, 
-         {
-            name: `${driver1Code} Finishing Position`,
-            type: 'line',
-            yAxis: 0,
-            data: driver1Positions,
-            marker: {
-                enabled: true
-            },
-            tooltip: {
-                valuePrefix: 'P '
-            }
-        },
+         
          {
             name: `${driver2Code} Finishing Position`,
             type: 'line',
@@ -161,7 +180,7 @@ RaceChartView.prototype.renderChart = function(){
                 enabled: true
             },
             tooltip: {
-                valuePrefix: 'P '
+                valuePrefix: 'P'
             }
         }
     ],
@@ -188,11 +207,21 @@ RaceChartView.prototype.renderChart = function(){
 
 RaceChartView.prototype.defineYears = function(d1years, d2years){
     if(d1years.length >= d2years.length){
-        return d1years.reverse();
-    }else {
-        return d2years.reverse();
+        return d1years;
+    } else {
+        return d2years;
     }
 }
 
+RaceChartView.prototype.populateResultsArraysCorrectly = function(array, yearArray){
+    const newArray = array;
+    if(array.length < yearArray.length){
+        const j = yearArray.length - array.length;
+        for(i = 0; i < j; i++){
+            newArray.unshift(null)
+        }
+    }
+    return newArray;
+}
 
 module.exports = RaceChartView;

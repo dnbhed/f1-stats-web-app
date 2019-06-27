@@ -27,12 +27,16 @@ RaceChartView.prototype.parseDriver1RacesResults = function(result){
     this.driver1Results = result;
     console.log(this.driver1Results)
     console.log(this.driver2Results)
+    console.log(this.driver2Results === this.driver1Results)
+
 }
 
 RaceChartView.prototype.parseDriver2RacesResults = function(result){
     this.driver2Results = result;
     console.log(this.driver1Results)
     console.log(this.driver2Results)
+    console.log(this.driver2Results === this.driver1Results)
+
 }
 
 RaceChartView.prototype.renderChart = function(){
@@ -76,6 +80,7 @@ RaceChartView.prototype.renderChart = function(){
             align: 'center'
         },
         xAxis: [{
+            reversed: true,
             categories: chosenYears,
             crosshair: true
         }],
@@ -136,7 +141,7 @@ RaceChartView.prototype.renderChart = function(){
             }
         }, 
          {
-            name: `${driver1Code} Grid Position`,
+            name: `${driver1Code} Finishing Position`,
             type: 'line',
             yAxis: 0,
             data: driver1Positions,
@@ -148,7 +153,7 @@ RaceChartView.prototype.renderChart = function(){
             }
         },
          {
-            name: `${driver2Code} Grid Position`,
+            name: `${driver2Code} Finishing Position`,
             type: 'line',
             yAxis: 0,
             data: driver2Positions,
@@ -183,9 +188,9 @@ RaceChartView.prototype.renderChart = function(){
 
 RaceChartView.prototype.defineYears = function(d1years, d2years){
     if(d1years.length >= d2years.length){
-        return d1years
+        return d1years.reverse();
     }else {
-        return d2years
+        return d2years.reverse();
     }
 }
 

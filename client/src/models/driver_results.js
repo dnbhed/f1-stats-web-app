@@ -3,7 +3,8 @@ const RequestHelper = require('../helpers/request_helper');
 
 
 const DriverResults = function(){
-    this.racesResults = {driverCode: "", years: [], grids: [], positions:[]}
+    this.driver1Results = {driverCode: "", years: [], grids: [], positions:[]};
+    this.driver2Results = {driverCode: "", years: [], grids: [], positions:[]};
 }
 
 DriverResults.prototype.getData = function(){
@@ -14,7 +15,7 @@ DriverResults.prototype.getData = function(){
             const request = new RequestHelper(`http://ergast.com/api/f1/drivers/${driverID}/circuits/${circuitID}/results.json`);
             request.get().then((data) => {
                 const races = data.MRData.RaceTable.Races;
-                const driverResults = this.parseDriversResults(races);
+                const driverResults = this.parseDriver1Results(races);
                 PubSub.publish('DriverResults:results-1-ready', driverResults)
             })
         })
@@ -26,28 +27,48 @@ DriverResults.prototype.getData = function(){
             const driverID = event.detail;
             const request = new RequestHelper(`http://ergast.com/api/f1/drivers/${driverID}/circuits/${circuitID}/results.json`);
             request.get().then((data) => {
-                const driverResults = this.parseDriversResults(data.MRData.RaceTable.Races);
+                debugger
+                const driverResults = this.parseDriver2Results(data.MRData.RaceTable.Races);
                 PubSub.publish('DriverResults:results-2-ready', driverResults)
             })
         })
     })
 }
 
-DriverResults.prototype.parseDriversResults = function(results){
+DriverResults.prototype.parseDriver1Results = function(results){
     const firstRace = results[0]
     const driverCode = firstRace.Results[0].Driver.code;
-    this.racesResults.driverCode = driverCode;
+    this.driver1Results.driverCode = driverCode;
+    this.driver1Results[driverCode] = []
     results.forEach((race) => {
         const season = parseInt(race.season);
-        this.racesResults.years.push(season);
+        this.driver1Results.years.push(season);
 
         const grid = parseInt(race.Results[0].grid);
-        this.racesResults.grids.push(grid);
+        this.driver1Results.grids.push(grid);
 
         const position = parseInt(race.Results[0].position);
-        this.racesResults.positions.push(position);   
+        this.driver1Results.positions.push(position);   
     })
-    return this.racesResults;
+    return this.driver1Results;
+}
+
+DriverResults.prototype.parseDriver2Results = function(results){
+    const firstRace = results[0]
+    const driverCode = firstRace.Results[0].Driver.code;
+    this.driver2Results.driverCode = driverCode;
+    this.driver2Results[driverCode] = []
+    results.forEach((race) => {
+        const season = parseInt(race.season);
+        this.driver2Results.years.push(season);
+
+        const grid = parseInt(race.Results[0].grid);
+        this.driver2Results.grids.push(grid);
+
+        const position = parseInt(race.Results[0].position);
+        this.driver2Results.positions.push(position);   
+    })
+    return this.driver2Results;
 }
     
 

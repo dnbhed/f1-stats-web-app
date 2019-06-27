@@ -19,7 +19,7 @@
   "bugs": {
     "url": "https://github.com/ThomasHAOD/f1-stats-web-app/issues"
   },"engines": {
-      "node": "10.x"
+      "node": "12.x"
   },
   "homepage": "https://github.com/ThomasHAOD/f1-stats-web-app#readme",
   "devDependencies": {

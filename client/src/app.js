@@ -10,8 +10,9 @@ const RaceChartView = require('./views/race_chart_view.js')
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    const chartContainer = document.querySelector('#chart-container');
-    const chartView = new RaceChartView(chartContainer);
+    const chartContainer1 = document.querySelector('#chart-container1');
+    const chartContainer2 = document.querySelector('#chart-container2');
+    const chartView = new RaceChartView(chartContainer1, chartContainer2);
     chartView.bindEvents();
 
     const driverResults = new DriverResults;

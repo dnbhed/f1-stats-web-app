@@ -48,7 +48,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const seasonsSelectView = new SeasonsSelectView(seasonsSelector);
     seasonsSelectView.bindEvents();
 
-
     const seasons = new Seasons;
     seasons.getData();
 

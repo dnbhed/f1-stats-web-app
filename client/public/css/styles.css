@@ -16,3 +16,13 @@ select {
 a-scene {
   z-index: -1;
 }
+
+nav {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+#info-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}

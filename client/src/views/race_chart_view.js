@@ -3,54 +3,65 @@ const Highcharts = require('highcharts');
 
 const RaceChartView = function(container){
     this.container = container;
-    this.results = {
-        qResult1:
-            { driverCode: "Not Selected", grid: 1},
-        raceResult1: 
-            { finishingPosition: 1, points: 25},
-        qResult2:
-            { driverCode: "Not Selected", grid: 20},
-        raceResult2:
-            { finishingPosition: 20, points: 0} 
-    }
+    this.driver1Results = { driverCode: "Not Selected", years: [], grids: [], positions: [] };
+    this.driver2Results = { driverCode: "Not Selected", years: [], grids: [], positions: [] }; 
+    
 }
 
 RaceChartView.prototype.bindEvents = function(){
-    // this.renderChart();
     PubSub.subscribe('DriverResults:results-1-ready', (event) => {
-        console.log(event.detail)
-        // this.parseDriverRaceResults1(event.detail)
-        // this.renderChart();
+        this.parseDriver1RacesResults(event.detail)
+        
+        this.renderChart();
     });
 
     PubSub.subscribe('DriverResults:results-2-ready', (event) => {
-        console.log(event.detail)
+        this.parseDriver2RacesResults(event.detail)  
 
-        // this.parseDriverRaceResults2(event.detail)        
-        // this.renderChart();
+        this.renderChart();
     });
-
 }
 
 
-RaceChartView.prototype.parseDriverRaceResults1 = function(result){
-    this.results.raceResult1 = {};
-    const finishingPosition = result.position;
-    const points = result.points;
-    this.results.raceResult1.finishingPosition = finishingPosition;
-    this.results.raceResult1.points = points;
+RaceChartView.prototype.parseDriver1RacesResults = function(result){
+    this.driver1Results = result;
+    console.log(this.driver1Results)
+    console.log(this.driver2Results)
 }
 
-RaceChartView.prototype.parseDriverRaceResults2 = function(result){
-    this.results.raceResult2 = {};
-    const finishingPosition = result.position;
-    const points = result.points;
-    this.results.raceResult2.finish = finishingPosition;
-    this.results.raceResult2.points = points;
+RaceChartView.prototype.parseDriver2RacesResults = function(result){
+    this.driver2Results = result;
+    console.log(this.driver1Results)
+    console.log(this.driver2Results)
 }
 
 RaceChartView.prototype.renderChart = function(){
-   
+    const driver1Code = this.driver1Results.driverCode
+    const driver2Code = this.driver2Results.driverCode
+
+    // console.log(driver1Code)
+    // console.log(driver2Code)
+    
+    const driver1Years = this.driver1Results.years
+    const driver2Years = this.driver2Results.years
+
+    // console.log(driver1Years)
+    // console.log(driver2Years)
+
+    const driver1Grids = this.driver1Results.grids
+    const driver2Grids = this.driver2Results.grids
+
+    // console.log(driver1Grids)
+    // console.log(driver2Grids)
+
+
+    const driver1Positions = this.driver1Results.positions
+    const driver2Positions = this.driver2Results.positions
+
+    // console.log(driver1Positions)
+    // console.log(driver2Positions)
+
+    const chosenYears = this.defineYears(driver1Years, driver2Years)
 
     Highcharts.chart(this.container, {
         chart: {
@@ -65,8 +76,7 @@ RaceChartView.prototype.renderChart = function(){
             align: 'center'
         },
         xAxis: [{
-            // categories: ['Q1', 'Q2', 'Q3', 'Grid', 'Finished', 'Points'],
-            categories: [`${driver1Code}`, `${driver2Code}`],
+            categories: chosenYears,
             crosshair: true
         }],
         yAxis: [{ 
@@ -86,24 +96,7 @@ RaceChartView.prototype.renderChart = function(){
             },
             min: 1, 
             max: 20 
-        }, { 
-            gridLineWidth: 0,
-            title: {
-                text: 'Points',
-                style: {
-                    color: Highcharts.getOptions().colors[1]
-                }
-            },
-            labels: {
-                format: '{value} Points',
-                style: {
-                    color: Highcharts.getOptions().colors[1]
-                }
-            },
-            opposite: true,
-                min: 0,
-                max: 25
-        }, 
+        }
          ],
         tooltip: {
             shared: true
@@ -119,39 +112,54 @@ RaceChartView.prototype.renderChart = function(){
         },
         series: [
          {
-            name: 'Grid Position',
-            type: 'scatter',
+            name: `${driver1Code} Grid Position`,
+            type: 'line',
             yAxis: 0,
-            data: [driver1Grid, driver2Grid],
+            data: driver1Grids,
             marker: {
-                enabled: false
+                enabled: true
             },
             tooltip: {
                 valuePrefix: 'P '
             }
         }, 
          {
-            name: 'Finishing Position',
-            type: 'scatter',
+            name: `${driver2Code} Grid Position`,
+            type: 'line',
             yAxis: 0,
-            data: [driver1Finish, driver2Finish],
+            data: driver2Grids,
             marker: {
-                enabled: false
+                enabled: true
             },
             tooltip: {
                 valuePrefix: 'P '
             }
-
         }, 
-        {
-            name: 'Points',
-            type: 'column',
-            yAxis: 1,
-            data: [driver1Points, driver2Points],
+         {
+            name: `${driver1Code} Grid Position`,
+            type: 'line',
+            yAxis: 0,
+            data: driver1Positions,
+            marker: {
+                enabled: true
+            },
             tooltip: {
-                valueSuffix: ' points'
+                valuePrefix: 'P '
             }
-        }],
+        },
+         {
+            name: `${driver2Code} Grid Position`,
+            type: 'line',
+            yAxis: 0,
+            data: driver2Positions,
+            marker: {
+                enabled: true
+            },
+            tooltip: {
+                valuePrefix: 'P '
+            }
+        }
+    ],
         responsive: {
             rules: [{
                 condition: {
@@ -173,6 +181,13 @@ RaceChartView.prototype.renderChart = function(){
 
 }
 
+RaceChartView.prototype.defineYears = function(d1years, d2years){
+    if(d1years.length >= d2years.length){
+        return d1years
+    }else {
+        return d2years
+    }
+}
 
 
 module.exports = RaceChartView;

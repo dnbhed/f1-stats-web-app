@@ -7,7 +7,6 @@ const DriversSelectView = function(selectElement){
 DriversSelectView.prototype.bindEvents = function(){
     PubSub.subscribe('Drivers:drivers-ready', (event) => {
         const drivers = event.detail;
-        
         this.populateDriverSelect(drivers);
     })
     

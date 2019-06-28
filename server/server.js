@@ -10,7 +10,4 @@ app.use(express.static(publicPath));
 
 app.use(parser.json());
 
-    
-app.listen(3000, function () {
-    console.log(`Listening on port ${this.address().port}`);
-});
+app.listen(process.env.PORT || 5000)

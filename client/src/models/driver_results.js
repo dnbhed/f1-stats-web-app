@@ -12,7 +12,7 @@ DriverResults.prototype.getData = function(){
         const circuitID = event.detail;
         PubSub.subscribe("Drivers-select:driver-drivers-list-1-selected", (event) => {
             const driverID = event.detail;
-            const request = new RequestHelper(`http://ergast.com/api/f1/drivers/${driverID}/circuits/${circuitID}/results.json`);
+            const request = new RequestHelper(`https://ergast.com/api/f1/drivers/${driverID}/circuits/${circuitID}/results.json`);
             request.get().then((data) => {
                 const driverResults = data.MRData.RaceTable.Races;
                 PubSub.publish('DriverResults:results-1-ready', driverResults)
@@ -24,7 +24,7 @@ DriverResults.prototype.getData = function(){
         const circuitID = event.detail;
         PubSub.subscribe("Drivers-select:driver-drivers-list-2-selected", (event) => {
             const driverID = event.detail;
-            const request = new RequestHelper(`http://ergast.com/api/f1/drivers/${driverID}/circuits/${circuitID}/results.json`);
+            const request = new RequestHelper(`https://ergast.com/api/f1/drivers/${driverID}/circuits/${circuitID}/results.json`);
             request.get().then((data) => {
                 const driverResults = data.MRData.RaceTable.Races;
                 PubSub.publish('DriverResults:results-2-ready', driverResults)

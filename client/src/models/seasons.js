@@ -6,7 +6,7 @@ const Seasons = function(){
 }
 
 Seasons.prototype.getData = function(){
-    const request = new RequestHelper("http://ergast.com/api/f1/seasons.json?limit=100");
+    const request = new RequestHelper("https://ergast.com/api/f1/seasons.json?limit=100");
     request.get().then((data) => {
         this.seasons = data.MRData.SeasonTable.Seasons
         PubSub.publish('Seasons:seasons-ready', this.seasons)

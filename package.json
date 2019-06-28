@@ -6,6 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server/server.js",
+    "devstart": "node server/devserver.js",
     "heroku-postbuild": "webpack -p",
     "build": "webpack -w",
     "server:dev": "nodemon server/server.js"

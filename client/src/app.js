@@ -6,9 +6,14 @@ const DriversSelectView = require('./views/drivers_select_view.js');
 const DriverDetailsView = require('./views/driver_details_view.js');
 const SeasonsSelectView = require('./views/seasons_select_view.js');
 const RaceSelectView = require('./views/race_select_view.js');
-const RaceChartView = require('./views/race_chart_view.js')
+const RaceChartView = require('./views/race_chart_view.js');
+const DriverStatsView = require('./views/driver_stats_view.js');
 
 document.addEventListener('DOMContentLoaded', () => {
+
+    const statsContainer1 = document.querySelector('#driver-1-stats');
+    const statsView = new DriverStatsView(statsContainer1);
+    // statsView.bindEvents();
 
     const chartContainer1 = document.querySelector('#chart-container1');
     const chartContainer2 = document.querySelector('#chart-container2');

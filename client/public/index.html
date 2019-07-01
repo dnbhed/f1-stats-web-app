@@ -11,45 +11,54 @@
 </head>
 <body>
    
-   <header>
+    
+    <nav>
+        <div></div>
+        <div></div>
         <h1>F1 Predictor</h1>
-        <h3>Compare statistics to win in your fantasy league</h3>
+        <div></div>
+        <div></div>
+    </nav>
+
+    <header id="page-description">
+        <h3>Please Select a Track and some Drivers to see their results</h3>
+    
     </header>
 
-    <nav>
 
-        <div>
-            <h1>Season Search</h1>
-            
-            <select name="seasons" id="seasons-list">
-            </select>
-        </div>
+
+    <section id="select-section">
+        <!-- <div> -->
+        <!-- <h1>Season Search</h1>
+                    
+                    <select name="seasons" id="seasons-list">
+                    </select>
+                </div> -->
         
-
+        
         <div>
             <h1>Track Search</h1>
-            
+        
             <select name="races" id="races-list">
             </select>
-
+        
         </div>
         
         <div>
-                <h1>Driver Select</h1>
-                <select name="drivers" id="drivers-list-1">
-                </select>
-                <select name="drivers" id="drivers-list-2">
-                </select>
+            <h1>Driver Select</h1>
+            <select name="drivers" id="drivers-list-1">
+            </select>
+            <select name="drivers" id="drivers-list-2">
+            </select>
         </div>
+    </section>    
 
-    </nav>
     
-
     <section id="info-container">
-        <div id="driver-1-career-stats"></div>
+        <div id="driver-1-stats"></div>
         <div id="driver-1-info"></div>
         <div id="driver-2-info"></div>
-        <div id="driver-2-career-stats"></div>
+        <div id="driver-2-stats"></div>
     </section>
     
     <section id="charts">

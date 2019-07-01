@@ -13,18 +13,27 @@ select {
   background-color: #bdbdbd;
 }
 
-a-scene {
-  z-index: -1;
-}
 
 nav {
   display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  text-align: center;
+}
+
+header {
+  text-align: center;
+}
+
+#select-section {
+  display: grid;
   grid-template-columns: repeat(3, 1fr);
+
 }
 
 #info-container {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
+  height: 300px;
 }
 
 #charts{

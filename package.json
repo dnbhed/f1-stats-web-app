@@ -32,7 +32,7 @@
     "webpack-cli": "^3.3.2"
   },
   "dependencies": {
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "highcharts": "^7.1.2"
   }
 }
